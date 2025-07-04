@@ -1,0 +1,263 @@
+{
+  "website": {
+    "name": "Limitless Design Solutions",
+    "theme": "modern-agency",
+    "colorScheme": {
+      "primary": "#6366f1",
+      "secondary": "#8b5cf6", 
+      "accent": "#ec4899",
+      "background": "#ffffff",
+      "text": "#111827",
+      "gradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+    },
+    "layout": {
+      "type": "single-page",
+      "responsive": true,
+      "sections": [
+        {
+          "name": "header",
+          "component": "Navigation",
+          "sticky": true,
+          "content": {
+            "logo": {
+              "type": "text",
+              "value": "STARBREAK",
+              "style": "font-bold text-xl"
+            },
+            "navigation": [
+              { "label": "ABOUT", "href": "#about" },
+              { "label": "SERVICES", "href": "#services" },
+              { "label": "PROJECT", "href": "#projects" },
+              { "label": "TESTIMONY", "href": "#testimonials" }
+            ],
+            "mobileMenu": {
+              "type": "hamburger",
+              "position": "right"
+            }
+          },
+          "styling": {
+            "background": "rgba(255, 255, 255, 0.8)",
+            "backdropFilter": "blur(10px)",
+            "padding": "1rem 2rem",
+            "borderBottom": "1px solid rgba(255, 255, 255, 0.2)"
+          }
+        },
+        {
+          "name": "hero",
+          "component": "HeroSection",
+          "content": {
+            "stats": [
+              {
+                "number": "+300",
+                "label": "SUCCESS PROJECT",
+                "position": "top-right"
+              },
+              {
+                "number": "+200", 
+                "label": "PRODUCT LAUNCHES",
+                "position": "top-right"
+              },
+              {
+                "number": "+100",
+                "label": "STARTUP RAISED", 
+                "position": "top-right"
+              }
+            ],
+            "tagline": {
+              "text": "UNLEASHING BOUNDLESS CREATIVITY FOR YOUR BRAND",
+              "position": "left",
+              "styling": "text-sm uppercase tracking-wide"
+            },
+            "mainHeading": {
+              "text": "LIMITLESS DESIGN SOLUTIONS",
+              "styling": "text-6xl font-black leading-tight"
+            },
+            "description": {
+              "text": "VISIONARY DESIGNERS THAT DEDICATED TO TRANSFORMING YOUR IDEAS INTO VISUAL",
+              "position": "bottom-left",
+              "styling": "text-sm uppercase tracking-wide max-w-xs"
+            },
+            "cta": {
+              "text": "REACH OUT",
+              "href": "#contact",
+              "icon": "arrow-right",
+              "position": "bottom-right",
+              "styling": "bg-transparent border-2 border-black px-6 py-3 font-semibold hover:bg-black hover:text-white transition-all"
+            },
+            "visual": {
+              "type": "3d-abstract",
+              "description": "Holographic 3D rings/torus shapes with metallic gradient",
+              "position": "center-left",
+              "animation": "floating rotation"
+            }
+          },
+          "styling": {
+            "minHeight": "100vh",
+            "display": "grid",
+            "gridTemplateColumns": "1fr 1fr",
+            "padding": "2rem",
+            "position": "relative"
+          }
+        },
+        {
+          "name": "services",
+          "component": "ServicesSection", 
+          "content": {
+            "sectionTitle": {
+              "text": "EXPLORE OUR SERVICES",
+              "styling": "text-4xl font-bold"
+            },
+            "services": [
+              {
+                "title": "BRAND IDENTITY CREATION",
+                "description": "CRAFTING UNIQUE AND MEMORABLE BRAND IDENTITIES",
+                "visual": {
+                  "type": "3d-sphere",
+                  "description": "Holographic eye/sphere with liquid mercury effect",
+                  "animation": "rotation reflection"
+                },
+                "styling": {
+                  "background": "rgba(255, 255, 255, 0.1)",
+                  "backdropFilter": "blur(20px)",
+                  "borderRadius": "20px",
+                  "padding": "2rem"
+                }
+              },
+              {
+                "title": "WEB & MOBILE DESIGN", 
+                "description": "CRAFTING UNIQUE AND MEMORABLE BRAND IDENTITIES",
+                "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                "textColor": "white",
+                "styling": {
+                  "borderRadius": "20px",
+                  "padding": "2rem"
+                }
+              },
+              {
+                "title": "UX/UI DESIGN",
+                "description": "ENSURING INTUITIVE AND DELIGHTFUL USER EXPERIENCES",
+                "styling": {
+                  "background": "rgba(255, 255, 255, 0.1)",
+                  "backdropFilter": "blur(20px)",
+                  "borderRadius": "20px", 
+                  "padding": "2rem"
+                }
+              }
+            ]
+          },
+          "styling": {
+            "padding": "4rem 2rem",
+            "display": "grid",
+            "gridTemplateColumns": "repeat(auto-fit, minmax(300px, 1fr))",
+            "gap": "2rem"
+          }
+        }
+      ]
+    },
+    "components": {
+      "Navigation": {
+        "props": ["logo", "menuItems", "mobileMenu"],
+        "state": ["isMenuOpen"],
+        "styling": "glassmorphism fixed-header"
+      },
+      "HeroSection": {
+        "props": ["stats", "heading", "description", "cta", "visual"],
+        "animations": ["fadeInUp", "floatingElements", "3dRotation"],
+        "responsive": "mobile-stack"
+      },
+      "ServicesSection": {
+        "props": ["title", "services"],
+        "layout": "grid masonry",
+        "animations": ["scrollTrigger", "hoverEffects"]
+      },
+      "StatCard": {
+        "props": ["number", "label"],
+        "styling": "minimal counter-animation"
+      },
+      "ServiceCard": {
+        "props": ["title", "description", "visual", "background"],
+        "styling": "glassmorphism hover-lift",
+        "variants": ["default", "featured", "minimal"]
+      }
+    },
+    "styling": {
+      "framework": "tailwindcss",
+      "customCSS": {
+        "glassmorphism": {
+          "background": "rgba(255, 255, 255, 0.1)",
+          "backdropFilter": "blur(20px)",
+          "border": "1px solid rgba(255, 255, 255, 0.2)"
+        },
+        "holographicGradient": {
+          "background": "linear-gradient(45deg, #ff6ec7, #ffd700, #7b68ee, #ff1493)",
+          "backgroundSize": "400% 400%",
+          "animation": "gradientShift 4s ease infinite"
+        },
+        "textGradient": {
+          "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          "webkitBackgroundClip": "text",
+          "webkitTextFillColor": "transparent"
+        }
+      },
+      "animations": {
+        "fadeInUp": "opacity and transform translateY",
+        "floating": "transform translateY sine wave",
+        "rotation3d": "transform rotateX rotateY rotateZ",
+        "gradientShift": "background-position movement",
+        "hoverLift": "transform translateY and shadow"
+      },
+      "breakpoints": {
+        "mobile": "640px",
+        "tablet": "768px", 
+        "desktop": "1024px",
+        "wide": "1280px"
+      }
+    },
+    "assets": {
+      "images": [
+        "3d-abstract-rings.png",
+        "holographic-sphere.png", 
+        "gradient-orb.png"
+      ],
+      "icons": [
+        "arrow-right",
+        "hamburger-menu",
+        "close"
+      ],
+      "fonts": [
+        "Inter (primary)",
+        "Space Grotesk (headings)"
+      ]
+    },
+    "interactions": {
+      "hover": {
+        "serviceCards": "lift and glow effect",
+        "buttons": "background and text color transition",
+        "navigation": "underline animation"
+      },
+      "scroll": {
+        "parallax": "3D elements move at different speeds",
+        "fadeIn": "elements appear as they enter viewport",
+        "stickyHeader": "navigation becomes translucent"
+      },
+      "mobile": {
+        "touchGestures": "swipe navigation",
+        "mobileMenu": "slide in from right"
+      }
+    },
+    "performance": {
+      "optimization": [
+        "lazy loading images",
+        "code splitting",
+        "compressed assets",
+        "critical CSS inlining"
+      ],
+      "accessibility": [
+        "semantic HTML",
+        "keyboard navigation",
+        "screen reader support",
+        "high contrast mode"
+      ]
+    }
+  }
+} 
