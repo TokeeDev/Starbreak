@@ -1,7 +1,5 @@
-import { HeroSection } from "@/components/blocks/hero-section-1"
- 
-export function Demo() {
-    return (
-        <HeroSection />
-    )
+import { Features } from "@/components/blocks/features-8"
+
+export const Demo = () => {
+    return <Features />
 } 
