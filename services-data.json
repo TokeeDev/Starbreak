@@ -1,0 +1,49 @@
+{
+  "services": [
+    {
+      "id": "software-dev",
+      "title": "SOFTWARE DEVELOPMENT",
+      "category": "Websites, Apps, Custom Solutions",
+      "description": "Build robust, scalable websites, web apps, and custom software tailored to your business needs. From concept to launch, we deliver seamless digital experiences that drive results.",
+      "icon": "code",
+      "variant": "dark",
+      "size": "large"
+    },
+    {
+      "id": "creative-design",
+      "title": "CREATIVE & VISUAL CONTENT",
+      "category": "Design, Branding, Visual Assets",
+      "description": "Captivate your audience with standout branding, UI/UX design, and compelling visual content. We bring your story to life with creativity and clarity.",
+      "icon": "palette",
+      "variant": "dark",
+      "size": "medium"
+    },
+    {
+      "id": "mvp-dev",
+      "title": "MVP DEVELOPMENT",
+      "category": "SEO, Campaigns, Growth Strategy",
+      "description": "Accelerate your growth with data-driven marketing strategies, targeted campaigns, and advanced SEO. We help you reach the right audience and boost your brand's visibility.",
+      "icon": "trending-up",
+      "variant": "dark",
+      "size": "large"
+    },
+    {
+      "id": "ecommerce",
+      "title": "E-COMMERCE SOLUTIONS",
+      "category": "Online Stores, Payments, Integrations",
+      "description": "Empower your business with end-to-end e-commerce platforms, secure payment systems, and custom integrations—designed to maximize sales and deliver a smooth shopping experience.",
+      "icon": "shopping-cart",
+      "variant": "dark",
+      "size": "small"
+    },
+    {
+      "id": "ai-automation",
+      "title": "AI & AUTOMATION",
+      "category": "AI Tools, Chatbots, Workflow Automation",
+      "description": "Transform your operations with intelligent AI solutions, automated workflows, and smart chatbots. Unlock efficiency and innovation across every part of your business.",
+      "icon": "cpu",
+      "variant": "dark",
+      "size": "small"
+    }
+  ]
+} 

@@ -44,8 +44,15 @@ export function NavBar({ items, className, showLogo = false, logoSrc, brandName 
       <div className="flex items-center gap-3 bg-black/20 border border-white/10 backdrop-blur-xl py-4 px-10 rounded-full shadow-lg pointer-events-auto">
         {showLogo && logoSrc && brandName && (
           <Link
-            href="/"
-            className="flex items-center space-x-3 mr-8"
+            href="#home"
+            className="flex items-center space-x-1 mr-6"
+            onClick={(e) => {
+              e.preventDefault();
+              const homeElement = document.getElementById('home');
+              if (homeElement) {
+                homeElement.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
           >
             <img 
               src={logoSrc} 

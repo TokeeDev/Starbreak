@@ -1,144 +1,101 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowRight, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { cn } from "@/lib/utils"
+import { X } from "lucide-react"
+import { getCalApi } from "@calcom/embed-react"
 
-const questions = [
-  { id: "name", label: "What's your name?", type: "text", placeholder: "John Doe" },
-  { id: "email", label: "And your email?", type: "email", placeholder: "john.doe@example.com" },
-  { id: "company", label: "What's your company's name?", type: "text", placeholder: "Acme Inc." },
-  { id: "service", label: "What service are you interested in?", type: "textarea", placeholder: "e.g., Web Development, UI/UX Design..." },
-  { id: "budget", label: "What's your estimated budget?", type: "text", placeholder: "$10,000" },
-]
-
-interface ConsultationFormProps {
-  isVisible: boolean
+interface CalModalProps {
+  isOpen: boolean
   onClose: () => void
-  calendlyUrl: string
 }
 
-export function ConsultationForm({ isVisible, onClose, calendlyUrl }: ConsultationFormProps) {
-  const [currentStep, setCurrentStep] = useState(0)
-  const [answers, setAnswers] = useState({})
-  const [isSubmitting, setIsSubmitting] = useState(false)
+export const CalModal = ({ isOpen, onClose }: CalModalProps) => {
+  const [isLoading, setIsLoading] = useState(true)
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setAnswers(prev => ({ ...prev, [name]: value }))
-  }
-
-  const handleNextStep = () => {
-    if (currentStep < questions.length) {
-      setCurrentStep(currentStep + 1)
+  useEffect(() => {
+    if (isOpen) {
+      initializeCal()
     }
-  }
+  }, [isOpen])
 
-  const handleSubmit = async () => {
-    setIsSubmitting(true)
+  const initializeCal = async () => {
     try {
-      await fetch('/api/save-consultation', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(answers),
+      const cal = await getCalApi()
+      setIsLoading(false)
+
+      // Listen for successful booking Come back to add confetti
+      
+
+      // Configure inline embed
+      cal("ui", {
+        theme: "light",
+        styles: {
+          branding: {
+            brandColor: "#000000"
+          }
+        },
+        hideEventTypeDetails: false,
+        layout: "month_view"
       })
+
     } catch (error) {
-      console.error("Failed to submit form:", error)
-    } finally {
-      setIsSubmitting(false)
-      window.open(calendlyUrl, '_blank')
-      onClose()
+      console.error("Error initializing Cal.com:", error)
+      setIsLoading(false)
     }
   }
-  
-  const currentQuestion = questions[currentStep]
+
+  const triggerConfetti = () => {
+    console.log("🎉 CONFETTI TIME! Meeting scheduled successfully!")
+    // Add your confetti library here
+  }
 
   return (
     <AnimatePresence>
-      {isVisible && (
+      {isOpen && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/80 backdrop-blur-lg z-[100] flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] flex items-center justify-center"
+          style={{
+            background: "rgba(0,0,0,0.7)",
+            backdropFilter: "blur(6px)",
+          }}
           onClick={onClose}
         >
           <motion.div
-            initial={{ y: 50, opacity: 0 }}
+            initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 50, opacity: 0 }}
-            className="bg-black/50 border border-white/10 rounded-2xl w-full max-w-2xl p-8 text-white relative"
-            onClick={(e) => e.stopPropagation()}
+            exit={{ y: 40, opacity: 0 }}
+            className="relative w-full max-w-4xl mx-auto rounded-2xl p-6 bg-white"
+            onClick={e => e.stopPropagation()}
           >
-            <Button variant="ghost" size="icon" className="absolute top-4 right-4" onClick={onClose}>
-              <X className="h-6 w-6" />
-            </Button>
-            
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentStep}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.3 }}
-              >
-                {currentStep < questions.length ? (
-                  <div>
-                    <label htmlFor={currentQuestion.id} className="text-2xl md:text-3xl font-bold mb-8 block text-center">
-                      {currentStep + 1}. {currentQuestion.label}
-                    </label>
-                    {currentQuestion.type === 'textarea' ? (
-                      <Textarea
-                        id={currentQuestion.id}
-                        name={currentQuestion.id}
-                        placeholder={currentQuestion.placeholder}
-                        onChange={handleInputChange}
-                        className="bg-transparent border-0 border-b-2 border-white/30 text-xl text-center rounded-none focus:ring-0 focus-visible:outline-none focus-visible:ring-offset-0 transition-all duration-300"
-                      />
-                    ) : (
-                      <Input
-                        id={currentQuestion.id}
-                        name={currentQuestion.id}
-                        type={currentQuestion.type}
-                        placeholder={currentQuestion.placeholder}
-                        onChange={handleInputChange}
-                        className="bg-transparent border-0 border-b-2 border-white/30 text-xl text-center rounded-none focus:ring-0 focus-visible:outline-none focus-visible:ring-offset-0 transition-all duration-300"
-                      />
-                    )}
-                    <div className="flex justify-center mt-8">
-                      <Button onClick={handleNextStep} className="bg-white text-black hover:bg-white/90 font-bold">
-                        OK <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="text-center">
-                    <h2 className="text-3xl font-bold mb-4">Thanks for the info!</h2>
-                    <p className="text-lg text-white/80 mb-8">Let's get you on the schedule. Click below to find a time.</p>
-                    <Button onClick={handleSubmit} className="bg-green-500 hover:bg-green-600 text-white font-bold text-lg px-8 py-6">
-                      {isSubmitting ? "Saving..." : "Go to Calendly"}
-                    </Button>
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
+            <button
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 z-10"
+              onClick={onClose}
+              aria-label="Close"
+              type="button"
+            >
+              <X size={24} />
+            </button>
 
-            <div className="mt-8 text-center">
-              <button
-                onClick={() => window.open(calendlyUrl, '_blank')}
-                className="text-white/60 hover:text-white transition text-sm underline"
-              >
-                Or, skip and schedule directly
-              </button>
+            <div className="w-full h-[600px]">
+              {isLoading ? (
+                <div className="flex items-center justify-center h-full">
+                  <div className="text-lg">Loading Cal.com...</div>
+                </div>
+              ) : (
+                <div 
+                  data-cal-link="christian-fztuyy/30min"
+                  data-cal-config='{"layout":"month_view","theme":"light"}'
+                  className="h-full"
+                />
+              )}
             </div>
-            
           </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
   )
-} 
+}

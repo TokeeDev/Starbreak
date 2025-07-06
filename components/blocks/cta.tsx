@@ -1,8 +1,9 @@
 "use client";
 import Cal, { getCalApi } from "@calcom/embed-react";
 import { useEffect } from "react";
+import { Button } from '@/components/ui/button';
 
-export function Cta() {
+export const Cta = () => {
     useEffect(() => {
         (async function () {
             const cal = await getCalApi();
@@ -18,23 +19,10 @@ export function Cta() {
         })();
     }, []);
     return (
-        <section className="py-16 md:py-32">
-            <div className="mx-auto max-w-3xl lg:max-w-5xl px-6">
-                <div className="text-center">
-                    <h2 className="text-4xl font-bold">
-                        Ready to get started?
-                    </h2>
-                    <p className="mt-4 text-lg">
-                        Schedule a consultation to discuss your project.
-                    </p>
-                    <button
-                        data-cal-link="your-cal-link"
-                        className="mt-8 inline-block rounded-lg bg-black px-6 py-3 text-white"
-                    >
-                        Schedule a Consultation
-                    </button>
-                </div>
-            </div>
-        </section>
+        <div className='bg-black text-white min-h-[50vh] flex flex-col items-center justify-center text-center'>
+            <h2 className='text-4xl md:text-6xl font-bold mb-4'>Ready to Start a Project?</h2>
+            <p className='text-xl md:text-2xl mb-8'>Let's build something great together.</p>
+            <Button size='lg'>Contact Us</Button>
+        </div>
     );
 }
