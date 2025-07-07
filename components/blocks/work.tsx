@@ -38,95 +38,74 @@ export const Work: React.FC<WorkProps> = ({ onProjectSelect }) => {
         const fetchProjects = async () => {
             setIsLoading(true);
             
-            // Mock projects data
+            // Real projects data
             const mockProjects: Project[] = [
                 {
                     id: '1',
-                    title: 'E-Commerce Platform',
+                    title: 'Kytelink',
                     status: 'Completed',
-                    about: 'A modern e-commerce platform built with Next.js and React. Features include user authentication, product catalog, shopping cart, payment integration, and admin dashboard. Optimized for performance and SEO with advanced filtering and search capabilities.',
-                    scope: ['Web Design', 'Frontend Development', 'Backend Development', 'Database Design', 'Payment Integration'],
+                    about: 'Kytelink is a free, open-source link-in-bio platform designed for simplicity and speed. Users can quickly create personalized pages to showcase their links, track analytics, and use custom domains—all features that are paywalled elsewhere. Built for ease of use and fast performance, Kytelink has grown to serve over 10,000 users across 20+ countries.',
+                    scope: ['Web Development', 'UI/UX Design', 'Database Architecture', 'Analytics Implementation', 'Custom Domain Integration'],
                     meta: {
-                        cost: '$45,000',
+                        cost: '$25,000',
                         year: '2024'
                     },
                     images: [
                         {
-                            src: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop',
-                            alt: 'E-Commerce Platform - Homepage',
-                            ratio: 1.33
+                            src: 'https://z1yerx063o.ufs.sh/f/GN4ttTOsk7DcF2StEojfE65u4ULtZG20gO7STvNxqachkHnI',
+                            alt: 'Kytelink - Hero Section',
+                            ratio: 16/9
                         },
                         {
-                            src: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=800&fit=crop',
-                            alt: 'E-Commerce Platform - Mobile View',
-                            ratio: 0.75
+                            src: 'https://z1yerx063o.ufs.sh/f/GN4ttTOsk7Dcb4aAts5FgwX4VR5cpQzLxlkfWNdthsHS0ajv',
+                            alt: 'Kytelink - Call to Action',
+                            ratio: 16/9
                         },
                         {
-                            src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
-                            alt: 'E-Commerce Platform - Dashboard',
-                            ratio: 1.33
+                            src: 'https://z1yerx063o.ufs.sh/f/GN4ttTOsk7DcmMBnOt76uENijJ2ZFBA3RQkHeg9SW5TD41I0',
+                            alt: 'Kytelink - Platform Overview',
+                            ratio: 16/9
                         }
                     ],
-                    text: 'E-Commerce Platform',
-                    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop',
-                    link: '#'
+                    text: 'Kytelink',
+                    image: 'https://z1yerx063o.ufs.sh/f/GN4ttTOsk7DcF2StEojfE65u4ULtZG20gO7STvNxqachkHnI',
+                    link: 'https://kytelink.com/'
                 },
                 {
                     id: '2',
-                    title: 'SaaS Dashboard',
-                    status: 'In progress',
-                    about: 'A comprehensive SaaS dashboard for data analytics and business intelligence. Built with React, TypeScript, and D3.js for interactive charts and visualizations. Includes real-time data updates, user management, and advanced reporting features.',
-                    scope: ['UI/UX Design', 'React Development', 'Data Visualization', 'API Integration', 'Real-time Features'],
+                    title: 'VERBI.AI',
+                    status: 'Completed',
+                    about: 'VERBI.AI is an advanced AI-powered writing assistant designed to help users write better, faster, and smarter. The platform transforms your thoughts into polished, professional text with intelligent suggestions for grammar, style, and tone. Whether you need grammar correction, content rephrasing, or SEO optimization, VERBI.AI offers a range of features to simplify and elevate your writing process.',
+                    scope: ['AI Integration', 'Natural Language Processing', 'UI/UX Design', 'Real-time Analytics', 'SEO Optimization Tools'],
                     meta: {
-                        cost: '$35,000',
+                        cost: '$55,000',
                         year: '2024'
                     },
                     images: [
                         {
-                            src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
-                            alt: 'SaaS Dashboard - Analytics View',
-                            ratio: 1.33
+                            src: 'https://z1yerx063o.ufs.sh/f/GN4ttTOsk7Dcd0z2V9IXgTeObRl1FwVax7u2LoA0ikpyGHCq',
+                            alt: 'VERBI.AI - Hero Section',
+                            ratio: 16/9
                         },
                         {
-                            src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=800&fit=crop',
-                            alt: 'SaaS Dashboard - Mobile Analytics',
-                            ratio: 0.75
+                            src: 'https://z1yerx063o.ufs.sh/f/GN4ttTOsk7DcH0SBqN6ERrX9xOigJkNTm2AFQsUPcy4dDSle',
+                            alt: 'VERBI.AI - Analytics Charts',
+                            ratio: 16/9
+                        },
+                        {
+                            src: 'https://z1yerx063o.ufs.sh/f/GN4ttTOsk7Dc7suQcVolxRIfdYXy4210iasOW3QPocqNrU5L',
+                            alt: 'VERBI.AI - Call to Action',
+                            ratio: 16/9
+                        },
+                        {
+                            src: 'https://z1yerx063o.ufs.sh/f/GN4ttTOsk7Dcd8uMjVIXgTeObRl1FwVax7u2LoA0ikpyGHCq',
+                            alt: 'VERBI.AI - FAQ Section',
+                            ratio: 16/9
                         }
                     ],
-                    text: 'SaaS Dashboard',
-                    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop',
-                    link: '#'
-                },
-                {
-                    id: '3',
-                    title: 'Mobile Banking App',
-                    status: 'Completed',
-                    about: 'A secure mobile banking application with biometric authentication, transaction history, bill payments, and money transfers. Built with React Native for cross-platform compatibility and enhanced security features including end-to-end encryption.',
-                    scope: ['Mobile App Development', 'UI/UX Design', 'Security Implementation', 'API Development', 'Testing'],
-                    meta: {
-                        cost: '$60,000',
-                        year: '2023'
-                    },
-                    images: [
-                        {
-                            src: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=800&fit=crop',
-                            alt: 'Mobile Banking App - Login Screen',
-                            ratio: 0.75
-                        },
-                        {
-                            src: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=800&fit=crop',
-                            alt: 'Mobile Banking App - Dashboard',
-                            ratio: 0.75
-                        },
-                        {
-                            src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
-                            alt: 'Mobile Banking App - Analytics',
-                            ratio: 1.33
-                        }
-                    ],
-                    text: 'Mobile Banking App',
-                    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=300&fit=crop',
-                    link: '#'
+                    text: 'VERBI.AI',
+                    image: 'https://z1yerx063o.ufs.sh/f/GN4ttTOsk7Dcd0z2V9IXgTeObRl1FwVax7u2LoA0ikpyGHCq',
+                    link: 'https://verbi.ai'
                 }
             ];
 
@@ -145,11 +124,8 @@ export const Work: React.FC<WorkProps> = ({ onProjectSelect }) => {
             id="work" 
             className="bg-black text-white py-12 lg:py-16 relative overflow-hidden"
         >
-            {/* Background Image */}
-            <div 
-                className="absolute inset-0 bg-contain bg-center opacity-10"
-                style={{ backgroundImage: "url('/world-map-dots.png')" }}
-            ></div>
+        
+           
 
             {/* Main Content */}
             <div className="container mx-auto px-4 relative z-10">

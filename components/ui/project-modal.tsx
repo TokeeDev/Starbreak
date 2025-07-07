@@ -64,26 +64,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 
   if (!project) return null;
 
-  // Intelligent gallery layout logic
-  const galleryRows: ImageProps[][] = [];
-  if (project.images) {
-      let i = 0;
-      while (i < project.images.length) {
-          const currentImage = project.images[i];
-          const nextImage = project.images[i + 1];
 
-          if (currentImage.ratio === 16/9) {
-              galleryRows.push([currentImage]);
-              i += 1;
-          } else if (currentImage.ratio === 1/1 && nextImage?.ratio === 1/1) {
-              galleryRows.push([currentImage, nextImage]);
-              i += 2;
-          } else {
-              galleryRows.push([currentImage]);
-              i += 1;
-          }
-      }
-  }
 
   return (
     <AnimatePresence>
@@ -148,19 +129,22 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                   </div>
 
                   {/* Image Gallery */}
-                  {galleryRows.length > 0 && (
+                  {project.images && project.images.length > 0 && (
                       <div>
                           <h2 className="text-2xl font-bold mb-8 text-white text-center">Gallery</h2>
-                          <div className="flex flex-col gap-4">
-                              {galleryRows.map((row, rowIndex) => (
-                                  <div key={rowIndex} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                      {row.map((image, imgIndex) => (
-                                          <div key={imgIndex} className={row.length === 1 ? 'md:col-span-2' : ''}>
-                                              <AspectRatio ratio={image.ratio || 1 / 1} className="bg-neutral-900 rounded-2xl overflow-hidden">
-                                                  <Image src={image.src} alt={image.alt} fill className="object-cover transition-transform hover:scale-105 brightness-90"/>
-                                              </AspectRatio>
-                                          </div>
-                                      ))}
+                          <div className="flex flex-col gap-6">
+                              {project.images.map((image, imgIndex) => (
+                                  <div key={imgIndex} className="w-full">
+                                      <div className="bg-neutral-900 rounded-2xl overflow-hidden">
+                                          <Image 
+                                              src={image.src} 
+                                              alt={image.alt} 
+                                              width={1200} 
+                                              height={800}
+                                              className="w-full h-auto object-contain transition-transform hover:scale-[1.02] duration-300"
+                                              style={{ maxHeight: '600px' }}
+                                          />
+                                      </div>
                                   </div>
                               ))}
                           </div>
