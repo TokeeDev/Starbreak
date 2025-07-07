@@ -1,0 +1,278 @@
+'use client';
+
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
+import { Calendar, ArrowRight, Sparkles, Zap, Rocket } from 'lucide-react';
+import { StarsBackground } from '@/components/animate-ui/backgrounds/stars';
+
+const CTASection = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const containerRef = useRef<HTMLElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  const springX = useSpring(mouseX, { stiffness: 150, damping: 15 });
+  const springY = useSpring(mouseY, { stiffness: 150, damping: 15 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width / 2) / 20;
+        const y = (e.clientY - rect.top - rect.height / 2) / 20;
+        
+        mouseX.set(x);
+        mouseY.set(y);
+        setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+      }
+    };
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener('mousemove', handleMouseMove);
+      return () => container.removeEventListener('mousemove', handleMouseMove);
+    }
+  }, [mouseX, mouseY]);
+
+  const floatingIcons = [
+    { Icon: Sparkles, delay: 0, duration: 3 },
+    { Icon: Zap, delay: 1, duration: 4 },
+    { Icon: Rocket, delay: 2, duration: 3.5 },
+  ];
+
+  return (
+    <section 
+      ref={containerRef}
+      className="relative min-h-screen bg-black text-white overflow-hidden py-32"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Animated Stars Background */}
+      <StarsBackground className="absolute inset-0 -z-20" />
+      
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 -z-10">
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-br from-[#AD6331]/20 via-black/50 to-purple-900/20"
+          animate={{
+            background: isHovered 
+              ? "linear-gradient(135deg, rgba(173, 99, 49, 0.3) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(147, 51, 234, 0.3) 100%)"
+              : "linear-gradient(135deg, rgba(173, 99, 49, 0.2) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(147, 51, 234, 0.2) 100%)"
+          }}
+          transition={{ duration: 0.8 }}
+        />
+      </div>
+
+      {/* Floating Orbs */}
+      <div className="absolute inset-0 -z-5">
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-96 h-96 rounded-full"
+            style={{
+              background: `radial-gradient(circle, ${
+                i % 2 === 0 ? 'rgba(173, 99, 49, 0.1)' : 'rgba(147, 51, 234, 0.1)'
+              } 0%, transparent 70%)`,
+              left: `${20 + (i * 15)}%`,
+              top: `${10 + (i * 10)}%`,
+            }}
+            animate={{
+              x: [0, 100, 0],
+              y: [0, -100, 0],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 8 + i * 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Floating Icons */}
+      {floatingIcons.map(({ Icon, delay, duration }, index) => (
+        <motion.div
+          key={index}
+          className="absolute text-[#AD6331]/30"
+          style={{
+            left: `${20 + index * 30}%`,
+            top: `${20 + index * 20}%`,
+          }}
+          animate={{
+            y: [-20, 20, -20],
+            rotate: [0, 180, 360],
+            opacity: [0.3, 0.7, 0.3],
+          }}
+          transition={{
+            duration,
+            delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <Icon size={48} />
+        </motion.div>
+      ))}
+
+      {/* Mouse Follower Effect */}
+      {isHovered && (
+        <motion.div
+          className="absolute pointer-events-none z-10"
+          style={{
+            left: mousePosition.x - 100,
+            top: mousePosition.y - 100,
+          }}
+        >
+          <div className="w-52 h-52 rounded-full bg-gradient-radial from-[#AD6331]/20 to-transparent blur-xl" />
+        </motion.div>
+      )}
+
+      <div className="container mx-auto px-6 relative z-20">
+        <motion.div
+          className="max-w-6xl mx-auto text-center"
+          style={{ x: springX, y: springY }}
+        >
+          {/* Section Number */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex items-center justify-center mb-8"
+          >
+            <span className="text-8xl lg:text-9xl font-bold text-[#AD6331] font-mono">04</span>
+          </motion.div>
+
+          {/* Main Heading */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mb-8"
+          >
+            <h2 className="text-6xl md:text-8xl lg:text-9xl font-black leading-tight mb-4">
+              <span className="block">Ready to</span>
+              <span className="block bg-gradient-to-r from-[#AD6331] via-white to-purple-400 bg-clip-text text-transparent">
+                Build Something
+              </span>
+              <span className="block">Epic?</span>
+            </h2>
+          </motion.div>
+
+          {/* Subtitle */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="max-w-4xl mx-auto mb-16"
+          >
+            <p className="text-xl md:text-2xl lg:text-3xl text-neutral-300 leading-relaxed">
+              Stop wasting time with agencies that talk big but deliver small. 
+              <span className="text-white font-semibold"> Let&apos;s build your vision together.</span>
+            </p>
+          </motion.div>
+
+          {/* CTA Button Container */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="relative"
+          >
+            {/* Glowing Ring Animation */}
+            <motion.div
+              className="absolute inset-0 rounded-full"
+              animate={{
+                boxShadow: [
+                  '0 0 0 0px rgba(173, 99, 49, 0.7)',
+                  '0 0 0 20px rgba(173, 99, 49, 0)',
+                  '0 0 0 0px rgba(173, 99, 49, 0)',
+                ],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeOut",
+              }}
+            />
+
+            {/* Main CTA Button */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative inline-block"
+            >
+              <a 
+                href="https://cal.com/christian-fztuyy/30min?overlayCalendar=true&date=2025-07-11"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative"
+              >
+                {/* Button Background Glow */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#AD6331] to-purple-600 rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
+                
+                {/* Main Button */}
+                <div className="relative bg-gradient-to-r from-[#AD6331] to-purple-600 rounded-2xl p-1">
+                  <div className="bg-black/80 backdrop-blur-xl rounded-xl px-12 py-6 flex items-center gap-4 group-hover:bg-black/60 transition-all duration-300">
+                    <Calendar className="w-8 h-8 text-white group-hover:rotate-12 transition-transform duration-300" />
+                    <span className="text-2xl font-bold text-white">Schedule a Call</span>
+                    <ArrowRight className="w-8 h-8 text-white group-hover:translate-x-2 transition-transform duration-300" />
+                  </div>
+                </div>
+              </a>
+            </motion.div>
+
+            {/* Additional CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 1.2 }}
+              className="mt-12 flex flex-col sm:flex-row gap-6 justify-center items-center"
+            >
+              <div className="flex items-center gap-2 text-neutral-400">
+                <Sparkles className="w-5 h-5" />
+                <span className="text-lg">Free 30-minute consultation</span>
+              </div>
+              <div className="flex items-center gap-2 text-neutral-400">
+                <Zap className="w-5 h-5" />
+                <span className="text-lg">Same-day response guaranteed</span>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Bottom Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 1.4 }}
+            className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
+          >
+            {[
+              { stat: "24hrs", label: "Average Response Time" },
+              { stat: "100%", label: "Client Satisfaction" },
+              { stat: "2-4wks", label: "Typical Project Timeline" },
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                className="text-center"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="text-4xl font-bold text-[#AD6331] mb-2">{item.stat}</div>
+                <div className="text-neutral-400">{item.label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Bottom Gradient Fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent" />
+    </section>
+  );
+};
+
+export default CTASection;

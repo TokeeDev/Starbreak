@@ -3,21 +3,7 @@
 import React from 'react';
 import { Square } from 'lucide-react';
 import { StarsBackground } from '@/components/animate-ui/backgrounds/stars';
-
-/*
-  NOTE: There is a persistent TypeScript error with the <model-viewer> element below.
-  This is a known issue with how some editors cache TypeScript's language server.
-  The code is correct, but the error may not clear until you restart your code editor.
-*/
-declare global {
-  interface JSX {
-    IntrinsicElements: {
-      'model-viewer': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
-        suppressHydrationWarning?: boolean;
-      };
-    };
-  }
-}
+import ModelViewer from '@/components/ui/model-viewer';
 
 export default function About() {
   return (
@@ -54,17 +40,11 @@ export default function About() {
 
           {/* Right Column: 3D Model Viewer */}
           <div className="w-full h-96 flex items-center justify-center">
-            <model-viewer
-              src="https://z1yerx063o.ufs.sh/f/GN4ttTOsk7DcZUtl2QfwqnV0CiAr9JF6DdPoEx58Oh4mfgNU"
-              alt="Starbreak 3D Logo"
-              camera-controls
-              auto-rotate
-              ar
-              shadow-intensity="1"
-              style={{ width: '100%', height: '100%', '--poster-color': 'transparent' }}
-              suppressHydrationWarning={true}
-            >
-            </model-viewer>
+            <ModelViewer
+              url="https://z1yerx063o.ufs.sh/f/GN4ttTOsk7DcZUtl2QfwqnV0CiAr9JF6DdPoEx58Oh4mfgNU"
+              width={384}
+              height={384}
+            />
           </div>
         </div>
       </div>

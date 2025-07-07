@@ -6,6 +6,7 @@ import { HeroSection } from "@/components/blocks/hero-section";
 import About from "@/components/blocks/about";
 import { Services } from "@/components/blocks/services";
 import { Work } from "@/components/blocks/work";
+import CTASection from "@/components/blocks/cta-section";
 import ProjectModal from '@/components/ui/project-modal';
 
 interface Project {
@@ -48,6 +49,7 @@ export default function Home() {
       <About />
       <Services />
       <Work onProjectSelect={openModal}/>
+      <CTASection />
       <ProjectModal project={selectedProject} isOpen={isModalOpen} onClose={closeModal} />
       
     </div>
