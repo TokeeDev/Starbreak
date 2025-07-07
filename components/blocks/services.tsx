@@ -17,7 +17,6 @@ export function Services() {
             <div className="container mx-auto px-4 relative z-10">
                 <div className="flex items-center justify-end mb-8">
                     <h2 className="flex items-baseline gap-6 font-mono text-right">
-                        <span className="text-2xl lg:text-3xl text-neutral-400 font-light hidden sm:inline">服务</span>
                         <span className="text-5xl lg:text-7xl font-bold tracking-wider">SERVICES*</span>
                         <span className="text-6xl lg:text-8xl font-bold text-[#AD6331]">02</span>
                     </h2>

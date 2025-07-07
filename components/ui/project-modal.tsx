@@ -75,7 +75,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             exit={{ y: "100vh", opacity: 0 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-black/80 backdrop-blur-2xl border border-neutral-700 text-white w-full h-full md:max-h-[90vh] md:max-w-5xl rounded-2xl shadow-2xl flex flex-col"
+            className="bg-black/80 backdrop-blur-2xl border border-neutral-700 text-white w-full h-[70vh] md:max-h-[90vh] md:max-w-5xl rounded-2xl shadow-2xl flex flex-col"
             role="dialog"
             aria-modal="true"
             aria-labelledby="project-title"

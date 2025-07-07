@@ -1,35 +1,29 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Script from 'next/script';
 
 const geistSans = Geist({
+  subsets: ["latin"],
   variable: "--font-geist-sans",
-  subsets: ["latin"],
 });
-
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
   subsets: ["latin"],
+  variable: "--font-geist-mono",
 });
 
 const faviconPath = "/favicon-aee9a0ed-fcdc-49ed-8133-923f6aa011bf";
 
 export const metadata: Metadata = {
   title: "Starbreak - Your Vision, Our Code",
-  description: "A forward-thinking development agency focused on building cutting-edge applications. We build fast and scale faster.",
-  icons: {
-    icon: [
-      { url: `${faviconPath}/favicon.ico`, sizes: "any" },
-      { url: `${faviconPath}/favicon-48x48.png`, sizes: "48x48", type: "image/png" },
-      { url: `${faviconPath}/favicon-128x128.png`, sizes: "128x128", type: "image/png" },
-    ],
-    apple: `${faviconPath}/apple-touch-icon.png`,
-  },
-  manifest: `${faviconPath}/manifest.webmanifest`,
+  description:
+    "A forward-thinking development agency focused on building cutting-edge applications. We build fast and scale faster.",
   openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://starbreak.dev", // Change to your actual domain
     title: "Starbreak - Your Vision, Our Code",
     description: "A forward-thinking development agency focused on building cutting-edge applications. We build fast and scale faster.",
-    url: "https://starbreak.dev", // Change to your actual domain
     siteName: "Starbreak",
     images: [
       {
@@ -39,8 +33,6 @@ export const metadata: Metadata = {
         alt: "Starbreak Logo",
       },
     ],
-    locale: "en_US",
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
@@ -48,6 +40,11 @@ export const metadata: Metadata = {
     description: "A forward-thinking development agency focused on building cutting-edge applications. We build fast and scale faster.",
     images: [`${faviconPath}/android-chrome-512x512.png`],
     creator: "@yourtwitterhandle", // Change to your Twitter handle
+  },
+  icons: {
+    icon: `${faviconPath}/favicon.ico`,
+    shortcut: `${faviconPath}/favicon-16x16.png`,
+    apple: `${faviconPath}/apple-touch-icon.png`,
   },
 };
 
@@ -58,6 +55,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          type="module"
+          src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

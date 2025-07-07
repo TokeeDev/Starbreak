@@ -133,7 +133,6 @@ export const Work: React.FC<WorkProps> = ({ onProjectSelect }) => {
                   <h2 className="flex items-baseline gap-6 font-mono">
                     <span className="text-6xl lg:text-8xl font-bold text-[#AD6331]">03</span>
                     <span className="text-5xl lg:text-7xl font-bold tracking-wider">WORK*</span>
-                    <span className="text-2xl lg:text-3xl text-neutral-400 font-light hidden sm:inline">工作</span>
                   </h2>
                   <div className="text-[#AD6331] border border-[#AD6331] p-2 hidden md:block">
                     <Square size={32} strokeWidth={1} />
