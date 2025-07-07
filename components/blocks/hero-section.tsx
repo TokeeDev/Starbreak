@@ -6,6 +6,7 @@ import { InteractiveHoverButton } from '@/components/magicui/interactive-hover-b
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { CountingNumber } from '@/components/animate-ui/text/counting-number';
+import BlurText from '@/components/react-bits/TextAnimations/BlurText/BlurText';
 
 
 const stats = [
@@ -48,22 +49,56 @@ export function HeroSection() {
                             <div className="text-center">
 
 
-                                <h1 className="max-w-7xl mx-auto font-black text-white leading-normal md:leading-tight tracking-tight font-['Inter','system-ui','-apple-system','BlinkMacSystemFont','Segoe_UI','Roboto','sans-serif']">
-                                    <div className="text-4xl sm:text-6xl md:text-8xl lg:text-[6rem] xl:text-[7rem] 2xl:text-[8rem]">
-                                        <span className="sm:hidden">Your Vision Our Code</span>
-                                        <span className="hidden sm:block">Your Vision</span>
+                                <div className="max-w-7xl mx-auto font-black text-white leading-normal md:leading-tight tracking-tight font-['Inter','system-ui','-apple-system','BlinkMacSystemFont','Segoe_UI','Roboto','sans-serif'] text-center">
+                                    <div className="text-4xl sm:text-6xl md:text-8xl lg:text-[6rem] xl:text-[7rem] 2xl:text-[8rem] mb-4">
+                                        <div className="sm:hidden w-full">
+                                            <BlurText 
+                                                text="Your Vision Our Code" 
+                                                delay={100}
+                                                animateBy="words"
+                                                direction="bottom"
+                                                className=""
+                                            />
+                                        </div>
+                                        <div className="hidden sm:block w-full">
+                                            <BlurText 
+                                                text="Your Vision" 
+                                                delay={100}
+                                                animateBy="words"
+                                                direction="bottom"
+                                                className=""
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="hidden sm:block text-4xl sm:text-6xl md:text-8xl lg:text-[6rem] xl:text-[7rem] 2xl:text-[8rem]">
-                                        Our Code
+                                    <div className="hidden sm:block text-4xl sm:text-6xl md:text-8xl lg:text-[6rem] xl:text-[7rem] 2xl:text-[8rem] mb-4">
+                                        <BlurText 
+                                            text="Our Code" 
+                                            delay={150}
+                                            animateBy="words"
+                                            direction="bottom"
+                                            className=""
+                                        />
                                     </div>
-                                    <div className="text-4xl sm:text-6xl md:text-8xl lg:text-[6rem] xl:text-[7rem] 2xl:text-[8rem]">
-                                        Zero <em className="italic text-white">Bullsh*t</em>.
+                                    <div className="text-4xl sm:text-6xl md:text-8xl lg:text-[6rem] xl:text-[7rem] 2xl:text-[8rem] mb-4">
+                                        <BlurText 
+                                            text="Zero Bullsh*t." 
+                                            delay={200}
+                                            animateBy="words"
+                                            direction="bottom"
+                                            className=""
+                                        />
                                     </div>
-                                </h1>
+                                </div>
 
-                                <p className="max-w-3xl mx-auto mt-8 md:mt-12 text-lg md:text-xl lg:text-2xl text-white/80 font-light leading-relaxed">
-                                    We build fast and scale faster. Schedule a call.
-                                </p>
+                                <div className="max-w-3xl mx-auto mt-8 md:mt-12 text-lg md:text-xl lg:text-2xl text-white/80 font-light leading-relaxed text-center">
+                                    <BlurText 
+                                        text="We build fast and scale faster. Schedule a call." 
+                                        delay={80}
+                                        animateBy="words"
+                                        direction="bottom"
+                                        className=""
+                                    />
+                                </div>
 
                                 
 
