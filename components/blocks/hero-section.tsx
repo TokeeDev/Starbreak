@@ -67,7 +67,7 @@ export function HeroSection() {
                             <div className="text-center">
 
 
-                                <h1 className="max-w-7xl mx-auto font-black text-white leading-tight md:leading-[0.85] tracking-tight font-['Inter','system-ui','-apple-system','BlinkMacSystemFont','Segoe_UI','Roboto','sans-serif']">
+                                <h1 className="max-w-7xl mx-auto font-black text-white leading-normal md:leading-tight tracking-tight font-['Inter','system-ui','-apple-system','BlinkMacSystemFont','Segoe_UI','Roboto','sans-serif']">
                                     <div className="text-4xl sm:text-6xl md:text-8xl lg:text-[6rem] xl:text-[7rem] 2xl:text-[8rem]">
                                         <span className="sm:hidden">Your Vision Our Code</span>
                                         <span className="hidden sm:block">Your Vision</span>

@@ -118,10 +118,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                               <p className="text-neutral-300">{project.scope.join(', ')}</p>
                           </div>
                           <div>
-                              <h3 className="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-2">Cost</h3>
-                              <p className="font-semibold text-white">{project.meta.cost}</p>
-                          </div>
-                          <div>
                               <h3 className="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-2">Year</h3>
                               <p className="font-semibold text-white">{project.meta.year}</p>
                           </div>

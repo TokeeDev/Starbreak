@@ -37,15 +37,15 @@ export function NavBar({ items, className, showLogo = false, logoSrc, brandName 
   return (
     <div
       className={cn(
-        "fixed bottom-0 sm:top-0 left-1/2 -translate-x-1/2 z-50 mb-6 sm:pt-6 pointer-events-none",
+        "fixed top-4 left-0 right-0 z-50 flex justify-center pointer-events-none",
         className,
       )}
     >
-      <div className="flex items-center gap-3 bg-black/20 border border-white/10 backdrop-blur-xl py-4 px-10 rounded-full shadow-lg pointer-events-auto">
+      <div className="flex items-center gap-2 bg-black/20 border border-white/10 backdrop-blur-xl py-2 px-4 rounded-full shadow-lg pointer-events-auto">
         {showLogo && logoSrc && brandName && (
           <Link
             href="#home"
-            className="flex items-center space-x-1 mr-6"
+            className="flex items-center space-x-2 mr-4"
             onClick={(e) => {
               e.preventDefault();
               const homeElement = document.getElementById('home');
@@ -57,11 +57,11 @@ export function NavBar({ items, className, showLogo = false, logoSrc, brandName 
             <img 
               src={logoSrc} 
               alt={brandName} 
-              className="h-20 w-auto"
-              width={128}
-              height={128}
+              className="h-10 w-auto"
+              width={40}
+              height={40}
             />
-            <span className="text-white font-bold text-2xl">{brandName}</span>
+            <span className="text-white font-bold text-xl">{brandName}</span>
           </Link>
         )}
         {items.map((item) => {
@@ -74,7 +74,7 @@ export function NavBar({ items, className, showLogo = false, logoSrc, brandName 
               href={item.url}
               onClick={() => setActiveTab(item.name)}
               className={cn(
-                "relative cursor-pointer text-2xl font-bold px-5 py-4 rounded-full transition-colors",
+                "relative cursor-pointer text-base font-semibold px-4 py-2 rounded-full transition-colors",
                 "text-white/80 hover:text-white",
                 isActive && "bg-white/10 text-white",
               )}

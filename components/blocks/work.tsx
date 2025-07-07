@@ -93,7 +93,7 @@ export const Work: React.FC<WorkProps> = ({ onProjectSelect }) => {
                             ratio: 16/9
                         },
                         {
-                            src: 'https://z1yerx063o.ufs.sh/f/GN4ttTOsk7Dc7suQcVolxRIfdYXy4210iasOW3QPocqNrU5L',
+                            src: 'https://z1yerx063o.ufs.sh/f/GN4ttTOsk7DcGTgVh6Osk7DcoqVuNKeUPh2mS3vpQZIiyMfW',
                             alt: 'VERBI.AI - Call to Action',
                             ratio: 16/9
                         },
