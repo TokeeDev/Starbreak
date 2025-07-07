@@ -51,6 +51,7 @@ export default function Home() {
       <Services />
       <Work onProjectSelect={openModal}/>
       <ProjectModal project={selectedProject} isOpen={isModalOpen} onClose={closeModal} />
+      
     </div>
   );
 }

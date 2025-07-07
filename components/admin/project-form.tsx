@@ -2,6 +2,7 @@
 
 import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { Trash2 } from 'lucide-react';
+import { UploadthingUploader } from '@/components/ui/uploadthing-uploader';
 
 interface FormInputProps {
     id: string;
@@ -56,15 +57,17 @@ const FormTextarea: React.FC<FormTextareaProps> = ({ id, label, value, onChange,
     </div>
 );
 
-interface FileWithPreview extends File {
-    preview: string;
-    ratio?: number;
+interface UploadedFile {
+    url: string;
+    alt: string;
+    ratio: number;
 }
 
 interface ImageRecord {
     id?: string;
     image_url: string;
     alt_text?: string;
+    ratio?: number;
 }
 
 interface ProjectData {
@@ -92,7 +95,7 @@ export default function ProjectForm({ onSuccess, projectToEdit }: ProjectFormPro
         cost: '',
         year: '',
     });
-    const [files, setFiles] = useState<FileWithPreview[]>([]);
+    const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
     const [existingImages, setExistingImages] = useState<ImageRecord[]>([]);
     const [imagesToDelete, setImagesToDelete] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -111,7 +114,7 @@ export default function ProjectForm({ onSuccess, projectToEdit }: ProjectFormPro
                 year: projectToEdit.year,
             });
             setExistingImages(projectToEdit.project_images || []);
-            setFiles([]);
+            setUploadedFiles([]);
             setImagesToDelete([]);
         }
     }, [projectToEdit, isEditMode]);
@@ -121,26 +124,12 @@ export default function ProjectForm({ onSuccess, projectToEdit }: ProjectFormPro
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            const newFilesArray = Array.from(e.target.files);
-            
-            newFilesArray.forEach(file => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        const fileWithPreview: FileWithPreview = Object.assign(file, {
-                            preview: img.src,
-                            ratio: img.width / img.height
-                        });
-                        setFiles(prev => [...prev, fileWithPreview]);
-                    };
-                    img.src = e.target?.result as string;
-                };
-                reader.readAsDataURL(file);
-            });
-        }
+    const handleUploadComplete = (files: UploadedFile[]) => {
+        setUploadedFiles(files);
+    };
+
+    const handleUploadError = (error: Error) => {
+        setMessage(`Upload error: ${error.message}`);
     };
 
     const handleDeleteExistingImage = (imageId: string) => {
@@ -150,30 +139,23 @@ export default function ProjectForm({ onSuccess, projectToEdit }: ProjectFormPro
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        if (!isEditMode && files.length === 0) {
+        if (!isEditMode && uploadedFiles.length === 0) {
             setMessage("Please upload at least one image for a new project.");
             return;
         }
         setIsLoading(true);
         setMessage('');
 
-        const submissionData = new FormData();
-        Object.entries(formData).forEach(([key, value]) => {
-            submissionData.append(key, value);
-        });
-
-        // Append new files
-        files.forEach(file => {
-            submissionData.append('newFiles', file);
-            if (file.ratio) {
-                submissionData.append('ratios', file.ratio.toString());
-            }
-        });
-
-        // Append IDs of images to delete
-        if (isEditMode) {
-            submissionData.append('imagesToDelete', JSON.stringify(imagesToDelete));
-        }
+        const submissionData = {
+            title: formData.title,
+            status: formData.status,
+            about: formData.about,
+            scope: formData.scope,
+            cost: formData.cost,
+            year: formData.year,
+            imageUrls: uploadedFiles,
+            ...(isEditMode && { imagesToDelete })
+        };
 
         try {
             if (isEditMode && !projectToEdit?.id) {
@@ -184,13 +166,16 @@ export default function ProjectForm({ onSuccess, projectToEdit }: ProjectFormPro
 
             const response = await fetch(endpoint, {
                 method: method,
-                body: submissionData,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(submissionData),
             });
 
             const result = await response.json();
 
             if (!response.ok) {
-                throw new Error(result.details || 'Something went wrong');
+                throw new Error(result.details || result.error || 'Something went wrong');
             }
 
             const successMessage = isEditMode 
@@ -243,7 +228,7 @@ export default function ProjectForm({ onSuccess, projectToEdit }: ProjectFormPro
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                         {existingImages.map((image) => (
                             <div key={image.id} className="relative group">
-                                <img src={image.image_url} alt={image.alt_text || 'existing image'} className="rounded-lg object-cover w-full h-full" />
+                                <img src={image.image_url} alt={image.alt_text || 'existing image'} className="rounded-lg object-cover w-full h-32" />
                                 <button
                                     type="button"
                                     onClick={() => handleDeleteExistingImage(image.id!)}
@@ -260,33 +245,12 @@ export default function ProjectForm({ onSuccess, projectToEdit }: ProjectFormPro
 
             <div>
                 <label className="block text-sm font-medium text-neutral-300 mb-2">Project Images</label>
-                <div className="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-neutral-700 border-dashed rounded-md">
-                    <div className="space-y-1 text-center">
-                        <svg className="mx-auto h-12 w-12 text-neutral-500" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
-                        <div className="flex text-sm text-neutral-400">
-                            <label htmlFor="file-upload" className="relative cursor-pointer bg-neutral-900 rounded-md font-medium text-[#F4A261] hover:text-[#AD6331] focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-neutral-900 focus-within:ring-[#F4A261]">
-                                <span>Upload files</span>
-                                <input id="file-upload" name="file-upload" type="file" className="sr-only" multiple onChange={handleFileChange} />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                        </div>
-                        <p className="text-xs text-neutral-500">PNG, JPG, GIF up to 10MB</p>
-                    </div>
-                </div>
+                <UploadthingUploader 
+                    onUploadComplete={handleUploadComplete}
+                    onUploadError={handleUploadError}
+                    maxFiles={10}
+                />
             </div>
-            
-            {files.length > 0 && (
-                <div>
-                    <h3 className="text-sm font-medium text-neutral-300 mb-2">Image Previews</h3>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                        {files.map((file, index) => (
-                            <div key={index} className="relative">
-                                <img src={file.preview} alt={`Preview ${index}`} className="rounded-lg object-cover w-full h-full" />
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
 
             <div className="flex justify-end pt-4">
                 <button

@@ -37,45 +37,104 @@ export const Work: React.FC<WorkProps> = ({ onProjectSelect }) => {
     useEffect(() => {
         const fetchProjects = async () => {
             setIsLoading(true);
-            const { data, error } = await supabase
-                .from('projects')
-                .select(`
-                    *,
-                    project_images (
-                        image_url,
-                        alt_text,
-                        ratio
-                    )
-                `)
-                .order('created_at', { ascending: false });
-
-            if (error) {
-                console.error("Error fetching projects:", error);
-                setProjects([]);
-            } else {
-                const formattedProjects = data.map(p => ({
-                    id: p.id,
-                    title: p.title,
-                    status: p.status,
-                    about: p.about,
-                    scope: p.scope,
+            
+            // Mock projects data
+            const mockProjects: Project[] = [
+                {
+                    id: '1',
+                    title: 'E-Commerce Platform',
+                    status: 'Completed',
+                    about: 'A modern e-commerce platform built with Next.js and React. Features include user authentication, product catalog, shopping cart, payment integration, and admin dashboard. Optimized for performance and SEO with advanced filtering and search capabilities.',
+                    scope: ['Web Design', 'Frontend Development', 'Backend Development', 'Database Design', 'Payment Integration'],
                     meta: {
-                        cost: p.cost,
-                        year: p.year,
+                        cost: '$45,000',
+                        year: '2024'
                     },
-                    images: p.project_images.map((img: { image_url: string; alt_text: string; ratio: number; }) => ({
-                        src: img.image_url,
-                        alt: img.alt_text,
-                        ratio: img.ratio,
-                    })),
-                    // Data for the FlowingMenu
-                    text: p.title,
-                    image: p.project_images[0]?.image_url || '/fallback-image.png',
-                    link: `#`,
-                }));
-                setProjects(formattedProjects);
-            }
-            setIsLoading(false);
+                    images: [
+                        {
+                            src: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop',
+                            alt: 'E-Commerce Platform - Homepage',
+                            ratio: 1.33
+                        },
+                        {
+                            src: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=800&fit=crop',
+                            alt: 'E-Commerce Platform - Mobile View',
+                            ratio: 0.75
+                        },
+                        {
+                            src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
+                            alt: 'E-Commerce Platform - Dashboard',
+                            ratio: 1.33
+                        }
+                    ],
+                    text: 'E-Commerce Platform',
+                    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop',
+                    link: '#'
+                },
+                {
+                    id: '2',
+                    title: 'SaaS Dashboard',
+                    status: 'In progress',
+                    about: 'A comprehensive SaaS dashboard for data analytics and business intelligence. Built with React, TypeScript, and D3.js for interactive charts and visualizations. Includes real-time data updates, user management, and advanced reporting features.',
+                    scope: ['UI/UX Design', 'React Development', 'Data Visualization', 'API Integration', 'Real-time Features'],
+                    meta: {
+                        cost: '$35,000',
+                        year: '2024'
+                    },
+                    images: [
+                        {
+                            src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
+                            alt: 'SaaS Dashboard - Analytics View',
+                            ratio: 1.33
+                        },
+                        {
+                            src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=800&fit=crop',
+                            alt: 'SaaS Dashboard - Mobile Analytics',
+                            ratio: 0.75
+                        }
+                    ],
+                    text: 'SaaS Dashboard',
+                    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop',
+                    link: '#'
+                },
+                {
+                    id: '3',
+                    title: 'Mobile Banking App',
+                    status: 'Completed',
+                    about: 'A secure mobile banking application with biometric authentication, transaction history, bill payments, and money transfers. Built with React Native for cross-platform compatibility and enhanced security features including end-to-end encryption.',
+                    scope: ['Mobile App Development', 'UI/UX Design', 'Security Implementation', 'API Development', 'Testing'],
+                    meta: {
+                        cost: '$60,000',
+                        year: '2023'
+                    },
+                    images: [
+                        {
+                            src: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=800&fit=crop',
+                            alt: 'Mobile Banking App - Login Screen',
+                            ratio: 0.75
+                        },
+                        {
+                            src: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=800&fit=crop',
+                            alt: 'Mobile Banking App - Dashboard',
+                            ratio: 0.75
+                        },
+                        {
+                            src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
+                            alt: 'Mobile Banking App - Analytics',
+                            ratio: 1.33
+                        }
+                    ],
+                    text: 'Mobile Banking App',
+                    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=300&fit=crop',
+                    link: '#'
+                }
+            ];
+
+            // Simulate loading time
+            setTimeout(() => {
+                setProjects(mockProjects);
+                setIsLoading(false);
+            }, 500);
         };
 
         fetchProjects();

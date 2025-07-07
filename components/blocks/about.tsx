@@ -3,7 +3,6 @@
 import React from 'react';
 import { Square, MoveUpRight } from 'lucide-react';
 import { StarsBackground } from '@/components/animate-ui/backgrounds/stars';
-import ModelViewer from '@/components/react-bits/ModelViewer';
 
 /*
   NOTE: There is a persistent TypeScript error with the <model-viewer> element below.
@@ -42,31 +41,11 @@ export default function About() {
         {/* Dotted Separator */}
         <div className="w-full border-b border-dashed border-neutral-600 mb-12"></div>
 
-        {/* Two-column layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-24 items-center">
-          {/* Left Column: Main Description */}
-          <div className="md:col-span-2">
-            <p className="text-xl lg:text-3xl font-medium leading-relaxed lg:leading-loose tracking-wide">
-              WE'RE A TEAM OF DIGITAL NATIVES WHO HAVE BEEN BUILDING AND INVESTING IN WEB TECHNOLOGIES FOR OVER 10 YEARS. FOUNDED IN 2024, STARBREAK IS DEDICATED TO HELPING BUSINESSES WITH GLOBAL ASPIRATIONS FIND INNOVATION AND ADOPTION ANYWHERE.
-            </p>
-          </div>
-          
-          {/* Right Column: 3D Model */}
-          <div className="md:col-span-1">
-            <ModelViewer
-              url="/Starbreak.glb"
-              width="auto"
-              height="auto"
-              defaultZoom={2}
-              enableManualRotation={true}
-              enableManualZoom={true}
-              autoRotate={false}
-              showScreenshotButton={false}
-              environmentPreset="studio"
-              ambientIntensity={1}
-              keyLightIntensity={2}
-            />
-          </div>
+        {/* Main Description */}
+        <div className="max-w-4xl">
+          <p className="text-xl lg:text-3xl font-medium leading-relaxed lg:leading-loose tracking-wide">
+            WE'RE A TEAM OF DIGITAL NATIVES WHO HAVE BEEN BUILDING AND INVESTING IN WEB TECHNOLOGIES FOR OVER 10 YEARS. FOUNDED IN 2024, STARBREAK IS DEDICATED TO HELPING BUSINESSES WITH GLOBAL ASPIRATIONS FIND INNOVATION AND ADOPTION ANYWHERE.
+          </p>
         </div>
       </div>
     </section>
