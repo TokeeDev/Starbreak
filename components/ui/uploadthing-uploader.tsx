@@ -4,6 +4,7 @@ import { UploadDropzone } from "@uploadthing/react";
 import { OurFileRouter } from "@/lib/uploadthing";
 import { useState } from "react";
 import { Trash2 } from "lucide-react";
+import Image from "next/image";
 
 interface UploadedFile {
   url: string;
@@ -14,22 +15,20 @@ interface UploadedFile {
 interface UploadthingUploaderProps {
   onUploadComplete: (files: UploadedFile[]) => void;
   onUploadError: (error: Error) => void;
-  maxFiles?: number;
 }
 
 export function UploadthingUploader({ 
   onUploadComplete, 
-  onUploadError,
-  maxFiles = 10 
+  onUploadError
 }: UploadthingUploaderProps) {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [isUploading, setIsUploading] = useState(false);
 
-  const handleUploadComplete = (files: any[]) => {
+  const handleUploadComplete = (files: Array<{ url: string; name?: string }>) => {
     setIsUploading(false);
     const processedFiles = files.map(file => {
       // Create an image to calculate ratio
-      const img = new Image();
+      const img = new window.Image();
       img.onload = () => {
         const ratio = img.width / img.height;
         const updatedFile = {
@@ -101,10 +100,12 @@ export function UploadthingUploader({
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {uploadedFiles.map((file, index) => (
               <div key={index} className="relative group">
-                <img 
+                <Image 
                   src={file.url} 
                   alt={file.alt} 
-                  className="rounded-lg object-cover w-full h-32" 
+                  className="rounded-lg object-cover w-full h-32"
+                  width={128}
+                  height={128}
                 />
                 <button
                   type="button"

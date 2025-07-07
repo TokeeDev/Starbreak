@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Square, MoveUpRight } from 'lucide-react';
+import { Square } from 'lucide-react';
 import { StarsBackground } from '@/components/animate-ui/backgrounds/stars';
 
 /*
@@ -10,10 +10,10 @@ import { StarsBackground } from '@/components/animate-ui/backgrounds/stars';
   The code is correct, but the error may not clear until you restart your code editor.
 */
 declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'model-viewer': any;
-    }
+  interface JSX {
+    IntrinsicElements: {
+      'model-viewer': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    };
   }
 }
 
@@ -44,7 +44,8 @@ export default function About() {
         {/* Main Description */}
         <div className="max-w-4xl">
           <p className="text-xl lg:text-3xl font-medium leading-relaxed lg:leading-loose tracking-wide">
-            WE'RE A TEAM OF DIGITAL NATIVES WHO HAVE BEEN BUILDING AND INVESTING IN WEB TECHNOLOGIES FOR OVER 10 YEARS. FOUNDED IN 2024, STARBREAK IS DEDICATED TO HELPING BUSINESSES WITH GLOBAL ASPIRATIONS FIND INNOVATION AND ADOPTION ANYWHERE.
+          We&apos;re Starbreak — a creative dev studio for people who actually want shit built.
+          We design and launch digital products that work hard and look good doing it. Whether it&apos;s a web app, mobile MVP, or a scrappy startup idea, we move fast and build like we mean it. No fluff, no filler — just clean design, sharp code, and projects that ship.
           </p>
         </div>
       </div>

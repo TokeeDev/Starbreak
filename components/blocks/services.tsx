@@ -1,5 +1,4 @@
 import React from 'react';
-import { Square } from 'lucide-react';
 import BentoBox from '../ui/bentobox';
 
 export function Services() {

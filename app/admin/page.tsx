@@ -2,11 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import ProjectForm from '@/components/admin/project-form';
-import { supabase } from '@/lib/supabaseClient';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Plus, Edit, Trash2, LogOut } from 'lucide-react';
-import type { User } from '@supabase/supabase-js';
 
 interface Project {
   id: string;
@@ -20,44 +18,21 @@ interface Project {
 }
 
 export default function AdminPage() {
-  const [user, setUser] = useState<User | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [view, setView] = useState<'list' | 'form'>('list');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const router = useRouter();
 
   useEffect(() => {
-    const checkUser = async () => {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) {
-            router.push('/login');
-        } else {
-            setUser(session.user);
-        }
-    };
-    checkUser();
-  }, [router]);
+    // TODO: Implement authentication check
+    fetchProjects();
+  }, []);
 
-  useEffect(() => {
-    if (user && view === 'list') {
-      fetchProjects();
-    }
-  }, [user, view]);
-
-  const fetchProjects = async () => {
+  const fetchProjects = () => {
     setIsLoading(true);
-    const { data, error } = await supabase
-      .from('projects')
-      .select('*, project_images(image_url)')
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      console.error('Error fetching projects:', error);
-      setProjects([]);
-    } else {
-      setProjects(data as Project[]);
-    }
+    // TODO: Implement project fetching logic
+    setProjects([]);
     setIsLoading(false);
   };
 
@@ -98,18 +73,11 @@ export default function AdminPage() {
     setView('list');
   }
 
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
+  const handleSignOut = () => {
+    // TODO: Implement sign out logic
     router.push('/login');
   }
 
-  if (!user) {
-    return (
-        <div className="min-h-screen bg-neutral-900 flex justify-center items-center">
-            <p className="text-white">Loading...</p>
-        </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-neutral-900 text-white p-4 sm:p-6 md:p-8">
@@ -117,7 +85,7 @@ export default function AdminPage() {
         <header className="mb-8 flex justify-between items-center">
           <div>
             <h1 className="text-3xl sm:text-4xl font-bold text-white">Admin Dashboard</h1>
-            <p className="text-neutral-400 mt-2">Welcome, {user.email}</p>
+            <p className="text-neutral-400 mt-2">Welcome, Admin</p>
           </div>
           <div className="flex items-center gap-4">
               {view === 'list' && (

@@ -3,8 +3,6 @@
 import { useState } from 'react';
 
 import { HeroSection } from "@/components/blocks/hero-section";
-
-import { Cta } from "@/components/blocks/cta";
 import About from "@/components/blocks/about";
 import { Services } from "@/components/blocks/services";
 import { Work } from "@/components/blocks/work";

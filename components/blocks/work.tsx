@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Square } from 'lucide-react';
 import FlowingMenu from '../react-bits/FlowingMenu';
-import { supabase } from '@/lib/supabaseClient';
+
 
 interface Project {
     id: string;
@@ -145,7 +145,7 @@ export const Work: React.FC<WorkProps> = ({ onProjectSelect }) => {
             </div>
             
             {/* FlowingMenu taking full width */}
-            <div className="flex-grow h-[60vh]">
+            <div className="flex-grow h-[40vh] sm:h-[50vh] lg:h-[60vh]">
                 {isLoading ? (
                     <div className="flex justify-center items-center h-full">
                         <p>Loading projects...</p>

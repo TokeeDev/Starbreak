@@ -3,6 +3,7 @@
 import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { Trash2 } from 'lucide-react';
 import { UploadthingUploader } from '@/components/ui/uploadthing-uploader';
+import Image from 'next/image';
 
 interface FormInputProps {
     id: string;
@@ -228,7 +229,7 @@ export default function ProjectForm({ onSuccess, projectToEdit }: ProjectFormPro
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                         {existingImages.map((image) => (
                             <div key={image.id} className="relative group">
-                                <img src={image.image_url} alt={image.alt_text || 'existing image'} className="rounded-lg object-cover w-full h-32" />
+                                <Image src={image.image_url} alt={image.alt_text || 'existing image'} className="rounded-lg object-cover w-full h-32" width={128} height={128} />
                                 <button
                                     type="button"
                                     onClick={() => handleDeleteExistingImage(image.id!)}
@@ -248,7 +249,6 @@ export default function ProjectForm({ onSuccess, projectToEdit }: ProjectFormPro
                 <UploadthingUploader 
                     onUploadComplete={handleUploadComplete}
                     onUploadError={handleUploadError}
-                    maxFiles={10}
                 />
             </div>
 

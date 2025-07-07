@@ -1,8 +1,9 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import Image from "next/image"
 import { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -22,17 +23,6 @@ interface NavBarProps {
 
 export function NavBar({ items, className, showLogo = false, logoSrc, brandName }: NavBarProps) {
   const [activeTab, setActiveTab] = useState(items[0].name)
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-
-    handleResize()
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
 
   return (
     <div
@@ -54,7 +44,7 @@ export function NavBar({ items, className, showLogo = false, logoSrc, brandName 
               }
             }}
           >
-            <img 
+            <Image 
               src={logoSrc} 
               alt={brandName} 
               className="h-10 w-auto"

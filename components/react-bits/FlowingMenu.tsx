@@ -2,34 +2,54 @@
 	Installed from https://reactbits.dev/ts/tailwind/
 */
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { gsap } from "gsap";
 
-interface MenuItemProps {
+interface FlowingMenuItemData {
   link: string;
   text: string;
   image: string;
+}
+
+interface MenuItemProps extends FlowingMenuItemData {
   onClick: () => void;
+  isMobile: boolean;
 }
 
-interface FlowingMenuProps {
-  items?: Omit<MenuItemProps, 'onClick'>[];
-  onItemClick: (item: any) => void;
+interface FlowingMenuProps<T extends FlowingMenuItemData> {
+  items?: T[];
+  onItemClick: (item: T) => void;
 }
 
-const FlowingMenu: React.FC<FlowingMenuProps> = ({ items = [], onItemClick }) => {
+const FlowingMenu = <T extends FlowingMenuItemData>({ items = [], onItemClick }: FlowingMenuProps<T>) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Using 768px as the breakpoint for mobile
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <div className="w-full h-full overflow-hidden">
       <nav className="flex flex-col h-full m-0 p-0">
         {items.map((item, idx) => (
-          <MenuItem key={idx} {...item} onClick={() => onItemClick(item)} />
+          <MenuItem key={idx} {...item} onClick={() => onItemClick(item)} isMobile={isMobile} />
         ))}
       </nav>
     </div>
   );
 };
 
-const MenuItem: React.FC<MenuItemProps> = ({ link, text, image, onClick }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ text, image, onClick, isMobile }) => {
   const itemRef = React.useRef<HTMLDivElement>(null);
   const marqueeRef = React.useRef<HTMLDivElement>(null);
   const marqueeInnerRef = React.useRef<HTMLDivElement>(null);
@@ -84,18 +104,23 @@ const MenuItem: React.FC<MenuItemProps> = ({ link, text, image, onClick }) => {
   };
 
   const repeatedMarqueeContent = React.useMemo(() => {
-    return Array.from({ length: 4 }).map((_, idx) => (
+    const repeatCount = isMobile ? 2 : 4;
+    const bgClass = isMobile
+      ? "bg-contain bg-center bg-no-repeat"
+      : "bg-cover bg-center";
+
+    return Array.from({ length: repeatCount }).map((_, idx) => (
       <React.Fragment key={idx}>
-        <span className="text-[#060010] uppercase font-normal text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight p-[1vh_1vw_0]">
+        <span className="text-[#060010] uppercase font-normal text-xl md:text-2xl p-2">
           {text}
         </span>
         <div
-          className="w-36 sm:w-48 md:w-[200px] h-[7vh] my-[2em] mx-[2vw] p-[1em_0] rounded-[50px] bg-cover bg-center"
+          className={`w-48 sm:w-64 h-32 sm:h-40 mx-4 rounded-lg ${bgClass}`}
           style={{ backgroundImage: `url(${image})` }}
         />
       </React.Fragment>
     ));
-  }, [text, image]);
+  }, [text, image, isMobile]);
 
   return (
     <div

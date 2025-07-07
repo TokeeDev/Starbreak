@@ -1,34 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
-import { ArrowRight, ChevronRight, Menu, X, Home, User, Settings, Phone, Github, Twitter } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { AnimatedGroup } from '@/components/ui/animated-group'
-import { StarsBackground } from '@/components/animate-ui/backgrounds/stars'
+import { Menu, X, Home, User, Settings } from 'lucide-react'
 import { NavBar } from '@/components/ui/tubelight-navbar'
 import { InteractiveHoverButton } from '@/components/magicui/interactive-hover-button'
-import { Footer } from '@/components/ui/footer'
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { CountingNumber } from '@/components/animate-ui/text/counting-number';
 
-const transitionVariants = {
-    item: {
-        hidden: {
-            opacity: 0,
-            filter: 'blur(12px)',
-            y: 12,
-        },
-        visible: {
-            opacity: 1,
-            filter: 'blur(0px)',
-            y: 0,
-            transition: {
-                type: 'spring' as const,
-                bounce: 0.3,
-                duration: 1.5,
-            },
-        },
-    },
-} as const
 
 const stats = [
     { number: 50, label: "projects", suffix: "+" },
@@ -50,19 +28,22 @@ export function HeroSection() {
                 <section className="min-h-screen flex items-center relative overflow-hidden py-20 rounded-b-[6rem]">
                     {/* Glass Gradient Waves Background */}
                     <div className="absolute inset-0 -z-20">
-                        <img
+                        <Image
                             src="/Glass Gradient Waves Background 17.png"
                             alt="Glass gradient waves background"
                             className="absolute inset-0 w-full h-full object-cover"
-                            width="2000"
-                            height="1200"
+                            width={3840}
+                            height={2160}
+                            quality={95}
+                            priority
+                            sizes="100vw"
                         />
                     </div>
                     
                     {/* Optional overlay for better text readability */}
                     <div aria-hidden className="absolute inset-0 -z-10 size-full bg-black/10" />
                     
-                    <div id="home" className="relative w-full z-[60]">
+                    <div id="home" className="relative w-full z-10">
                         <div className="mx-auto max-w-[90rem] px-6">
                             <div className="text-center">
 
@@ -102,7 +83,7 @@ export function HeroSection() {
                             </div>
                         </div>
                         <div className="mt-16 md:mt-24 text-white">
-                            <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-8 md:gap-32">
+                            <div className="max-w-5xl mx-auto flex flex-row items-center justify-center gap-8 md:gap-32">
                                 {stats.map((stat, idx) => (
                                 <div key={idx} className="text-center">
                                     <p className="text-4xl md:text-5xl font-bold flex items-center justify-center">
@@ -136,18 +117,9 @@ const navItems = [
 
 const HeroHeader = () => {
     const [menuState, setMenuState] = React.useState(false)
-    const [isScrolled, setIsScrolled] = React.useState(false)
-
-    React.useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50)
-        }
-        window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, [])
     return (
         <header>
-            <nav className="fixed z-50 w-full">
+            <nav className="fixed z-[100] w-full">
                 {/* Desktop Navigation - Tubelight Navbar */}
                 <div className="hidden lg:block">
                     <NavBar 
@@ -176,7 +148,7 @@ const HeroHeader = () => {
                                     setMenuState(false);
                                 }}>
                                 <div className="h-12 w-12">
-                                    <img 
+                                    <Image 
                                         src="/starbreak-logo.png" 
                                         alt="Starbreak" 
                                         className="h-12 w-auto"
@@ -221,16 +193,3 @@ const HeroHeader = () => {
     )
 }
 
-const Logo = ({ className }: { className?: string }) => {
-    return (
-        <div className={cn('flex items-center', className)}>
-            <img 
-                src="/starbreak-logo.png" 
-                alt="Starbreak" 
-                className="h-16 w-auto"
-                width={64}
-                height={64}
-            />
-        </div>
-    )
-}

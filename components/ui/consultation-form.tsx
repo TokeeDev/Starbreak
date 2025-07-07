@@ -45,10 +45,6 @@ export const CalModal = ({ isOpen, onClose }: CalModalProps) => {
     }
   }
 
-  const triggerConfetti = () => {
-    console.log("🎉 CONFETTI TIME! Meeting scheduled successfully!")
-    // Add your confetti library here
-  }
 
   return (
     <AnimatePresence>

@@ -14,7 +14,7 @@ function Model({ url }: ModelProps) {
   const modelRef = useRef<THREE.Group>(null);
 
   // Auto-rotate the model
-  useFrame((state) => {
+  useFrame(() => {
     if (modelRef.current) {
       modelRef.current.rotation.y += 0.01;
     }

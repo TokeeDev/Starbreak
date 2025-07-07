@@ -1,4 +1,3 @@
-import { IconBrandInstagram, IconBrandTelegram } from '@tabler/icons-react';
 
 export function Contact() {
   return (

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
 
 interface ImageProps {
@@ -34,12 +33,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   onClose,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ container: modalRef });
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
 
 
   useEffect(() => {
@@ -87,7 +80,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             aria-modal="true"
             aria-labelledby="project-title"
           >
-            <motion.div className="sticky top-0 h-1 bg-[#F4A261] origin-left z-20" style={{ scaleX }} />
             <div className="flex-shrink-0 p-4 flex justify-end">
               <button
                 onClick={onClose}
