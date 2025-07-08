@@ -3,7 +3,7 @@
 import React from 'react';
 import { Square } from 'lucide-react';
 import { StarsBackground } from '@/components/animate-ui/backgrounds/stars';
-import ModelViewer from '@/components/ui/model-viewer';
+import Dynamic3DViewer from '@/components/Dynamic3DViewer';
 
 export default function About() {
   return (
@@ -40,10 +40,10 @@ export default function About() {
 
           {/* Right Column: 3D Model Viewer */}
           <div className="w-full h-96 flex items-center justify-center">
-            <ModelViewer
-              url="https://z1yerx063o.ufs.sh/f/GN4ttTOsk7DcZUtl2QfwqnV0CiAr9JF6DdPoEx58Oh4mfgNU"
-              width={384}
-              height={384}
+            <Dynamic3DViewer
+              src="https://z1yerx063o.ufs.sh/f/GN4ttTOsk7DcZUtl2QfwqnV0CiAr9JF6DdPoEx58Oh4mfgNU"
+              className="w-96 h-96"
+              interactive={true}
             />
           </div>
         </div>

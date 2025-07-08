@@ -2,8 +2,9 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
-import { Calendar, ArrowRight, Sparkles, Zap, Rocket } from 'lucide-react';
+import { Sparkles, Zap, Rocket } from 'lucide-react';
 import { StarsBackground } from '@/components/animate-ui/backgrounds/stars';
+import { InteractiveHoverButton } from '@/components/magicui/interactive-hover-button';
 
 const CTASection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -182,48 +183,17 @@ const CTASection = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="relative"
           >
-            {/* Glowing Ring Animation */}
-            <motion.div
-              className="absolute inset-0 rounded-full"
-              animate={{
-                boxShadow: [
-                  '0 0 0 0px rgba(173, 99, 49, 0.7)',
-                  '0 0 0 20px rgba(173, 99, 49, 0)',
-                  '0 0 0 0px rgba(173, 99, 49, 0)',
-                ],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeOut",
-              }}
-            />
-
-            {/* Main CTA Button */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative inline-block"
+            <a 
+              href="https://cal.com/christian-fztuyy/30min?overlayCalendar=true&date=2025-07-11"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <a 
-                href="https://cal.com/christian-fztuyy/30min?overlayCalendar=true&date=2025-07-11"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative"
+              <InteractiveHoverButton 
+                className="bg-white/10 backdrop-blur-xl border border-white/20 text-white font-semibold h-16 px-10 text-lg shadow-lg shadow-white/10 hover:bg-white/20 hover:border-white/30 transition-all duration-300"
               >
-                {/* Button Background Glow */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#AD6331] to-purple-600 rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
-                
-                {/* Main Button */}
-                <div className="relative bg-gradient-to-r from-[#AD6331] to-purple-600 rounded-2xl p-1">
-                  <div className="bg-black/80 backdrop-blur-xl rounded-xl px-12 py-6 flex items-center gap-4 group-hover:bg-black/60 transition-all duration-300">
-                    <Calendar className="w-8 h-8 text-white group-hover:rotate-12 transition-transform duration-300" />
-                    <span className="text-2xl font-bold text-white">Schedule a Call</span>
-                    <ArrowRight className="w-8 h-8 text-white group-hover:translate-x-2 transition-transform duration-300" />
-                  </div>
-                </div>
-              </a>
-            </motion.div>
+                Schedule a Call →
+              </InteractiveHoverButton>
+            </a>
 
             {/* Additional CTAs */}
             <motion.div

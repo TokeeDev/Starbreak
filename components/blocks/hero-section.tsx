@@ -33,11 +33,13 @@ export function HeroSection() {
                             src="/Glass Gradient Waves Background 17.png"
                             alt="Glass gradient waves background"
                             className="absolute inset-0 w-full h-full object-cover"
-                            width={3840}
-                            height={2160}
-                            quality={95}
+                            width={1920}
+                            height={1080}
+                            quality={100}
                             priority
+                            unoptimized={true}
                             sizes="100vw"
+                            placeholder="empty"
                         />
                     </div>
                     
