@@ -154,6 +154,21 @@ const navItems = [
 
 const HeroHeader = () => {
     const [menuState, setMenuState] = React.useState(false)
+
+    // Handle smooth scrolling for mobile menu
+    const handleMobileNavClick = (href: string) => {
+        const sectionId = href.replace('#', '')
+        const section = document.getElementById(sectionId)
+        
+        if (section) {
+            section.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            })
+        }
+        setMenuState(false)
+    }
+
     return (
         <header>
             <nav className="fixed z-[100] w-full">
@@ -178,11 +193,7 @@ const HeroHeader = () => {
                                 className="flex items-center space-x-1"
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    const homeElement = document.getElementById('home');
-                                    if (homeElement) {
-                                        homeElement.scrollIntoView({ behavior: 'smooth' });
-                                    }
-                                    setMenuState(false);
+                                    handleMobileNavClick('#home');
                                 }}>
                                 <div className="h-12 w-12">
                                     <Image 
@@ -217,7 +228,10 @@ const HeroHeader = () => {
                                         key={index}
                                         href={item.href}
                                         className="text-white/80 hover:text-white transition-colors duration-200 py-3 text-xl font-semibold"
-                                        onClick={() => setMenuState(false)}>
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            handleMobileNavClick(item.href);
+                                        }}>
                                         {item.name}
                                     </Link>
                                 ))}

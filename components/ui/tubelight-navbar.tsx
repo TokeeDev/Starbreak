@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
@@ -22,7 +22,66 @@ interface NavBarProps {
 }
 
 export function NavBar({ items, className, showLogo = false, logoSrc, brandName }: NavBarProps) {
-  const [activeTab, setActiveTab] = useState(items[0].name)
+  const [activeTab, setActiveTab] = useState("")
+
+  // Function to get section ID from URL
+  const getSectionIdFromUrl = (url: string) => {
+    return url.replace('#', '')
+  }
+
+  // Function to check which section is currently in view
+  const checkActiveSection = useCallback(() => {
+    const sections = items.map(item => getSectionIdFromUrl(item.url))
+    const scrollPosition = window.scrollY + 100 // Add offset for fixed navbar
+
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const section = document.getElementById(sections[i])
+      if (section) {
+        const sectionTop = section.offsetTop
+        const sectionHeight = section.offsetHeight
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          setActiveTab(items[i].name)
+          return
+        }
+      }
+    }
+    
+    // If we're at the very top or no section is found, clear active tab
+    if (scrollPosition < 100) {
+      setActiveTab("")
+    }
+  }, [items])
+
+  // Handle scroll events
+  useEffect(() => {
+    const handleScroll = () => {
+      checkActiveSection()
+    }
+
+    // Check active section on mount
+    checkActiveSection()
+
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [checkActiveSection])
+
+  // Handle smooth scrolling when clicking nav items
+  const handleNavClick = (item: NavItem) => {
+    const sectionId = getSectionIdFromUrl(item.url)
+    const section = document.getElementById(sectionId)
+    
+    if (section) {
+      section.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
 
   return (
     <div
@@ -62,7 +121,10 @@ export function NavBar({ items, className, showLogo = false, logoSrc, brandName 
             <Link
               key={item.name}
               href={item.url}
-              onClick={() => setActiveTab(item.name)}
+              onClick={(e) => {
+                e.preventDefault()
+                handleNavClick(item)
+              }}
               className={cn(
                 "relative cursor-pointer text-base font-semibold px-4 py-2 rounded-full transition-colors",
                 "text-white/80 hover:text-white",
