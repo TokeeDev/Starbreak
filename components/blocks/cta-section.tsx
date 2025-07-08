@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
-import { Sparkles, Zap, Rocket } from 'lucide-react';
+import { Sparkles, Zap, Rocket, Square } from 'lucide-react';
 import { StarsBackground } from '@/components/animate-ui/backgrounds/stars';
 import { InteractiveHoverButton } from '@/components/magicui/interactive-hover-button';
 
@@ -47,7 +47,8 @@ const CTASection = () => {
   return (
     <section 
       ref={containerRef}
-      className="relative min-h-screen bg-black text-white overflow-hidden py-32"
+      id="contact"
+      className="relative bg-black text-white overflow-hidden py-12 lg:py-16"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -132,21 +133,27 @@ const CTASection = () => {
         </motion.div>
       )}
 
+      {/* Section Header */}
+      <div className="container mx-auto px-4 relative z-20">
+        <div className="flex items-center justify-end mb-8">
+          <h2 className="flex items-baseline gap-6 font-mono text-right">
+            <span className="text-5xl lg:text-7xl font-bold tracking-wider">CONTACT*</span>
+            <span className="text-6xl lg:text-8xl font-bold text-[#AD6331]">04</span>
+          </h2>
+          <div className="text-[#AD6331] border border-[#AD6331] p-2 hidden md:block ml-6">
+            <Square size={32} strokeWidth={1} />
+          </div>
+        </div>
+
+        {/* Dotted Separator */}
+        <div className="w-full border-b border-dashed border-neutral-600 mb-12"></div>
+      </div>
+
       <div className="container mx-auto px-6 relative z-20">
         <motion.div
           className="max-w-6xl mx-auto text-center"
           style={{ x: springX, y: springY }}
         >
-          {/* Section Number */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex items-center justify-center mb-8"
-          >
-            <span className="text-8xl lg:text-9xl font-bold text-[#AD6331] font-mono">04</span>
-          </motion.div>
-
           {/* Main Heading */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -154,13 +161,13 @@ const CTASection = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mb-8"
           >
-            <h2 className="text-6xl md:text-8xl lg:text-9xl font-black leading-tight mb-4">
+            <h3 className="text-6xl md:text-8xl lg:text-9xl font-black leading-tight mb-4">
               <span className="block">Ready to</span>
               <span className="block bg-gradient-to-r from-[#AD6331] via-white to-purple-400 bg-clip-text text-transparent">
                 Build Something
               </span>
               <span className="block">Epic?</span>
-            </h2>
+            </h3>
           </motion.div>
 
           {/* Subtitle */}

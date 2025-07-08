@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { Menu, X, Home, User, Settings } from 'lucide-react'
+import { Menu, X, Home, User, Settings, Mail } from 'lucide-react'
 import { NavBar } from '@/components/ui/tubelight-navbar'
 import { InteractiveHoverButton } from '@/components/magicui/interactive-hover-button'
 import Image from 'next/image'
@@ -143,6 +143,7 @@ const menuItems = [
     { name: 'About', href: '#about' },
     { name: 'Services', href: '#services' },
     { name: 'Work', href: '#work' },
+    { name: 'Contact', href: '#contact' },
     { name: 'Home', href: '#home' }
 ]
 
@@ -150,6 +151,7 @@ const navItems = [
     { name: 'About', url: '#about', icon: User },
     { name: 'Services', url: '#services', icon: Settings },
     { name: 'Work', url: '#work', icon: Home },
+    { name: 'Contact', url: '#contact', icon: Mail },
 ]
 
 const HeroHeader = () => {
