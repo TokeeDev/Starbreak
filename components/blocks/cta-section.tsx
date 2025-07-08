@@ -68,8 +68,8 @@ const CTASection = () => {
         />
       </div>
 
-      {/* Floating Orbs */}
-      <div className="absolute inset-0 -z-5">
+      {/* Floating Orbs - Hide on mobile for performance */}
+      <div className="absolute inset-0 -z-5 hidden md:block">
         {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
@@ -95,35 +95,37 @@ const CTASection = () => {
         ))}
       </div>
 
-      {/* Floating Icons */}
-      {floatingIcons.map(({ Icon, delay, duration }, index) => (
-        <motion.div
-          key={index}
-          className="absolute text-[#AD6331]/30"
-          style={{
-            left: `${20 + index * 30}%`,
-            top: `${20 + index * 20}%`,
-          }}
-          animate={{
-            y: [-20, 20, -20],
-            rotate: [0, 180, 360],
-            opacity: [0.3, 0.7, 0.3],
-          }}
-          transition={{
-            duration,
-            delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <Icon size={48} />
-        </motion.div>
-      ))}
+      {/* Floating Icons - Hide on mobile */}
+      <div className="hidden lg:block">
+        {floatingIcons.map(({ Icon, delay, duration }, index) => (
+          <motion.div
+            key={index}
+            className="absolute text-[#AD6331]/30"
+            style={{
+              left: `${20 + index * 30}%`,
+              top: `${20 + index * 20}%`,
+            }}
+            animate={{
+              y: [-20, 20, -20],
+              rotate: [0, 180, 360],
+              opacity: [0.3, 0.7, 0.3],
+            }}
+            transition={{
+              duration,
+              delay,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <Icon size={48} />
+          </motion.div>
+        ))}
+      </div>
 
-      {/* Mouse Follower Effect */}
+      {/* Mouse Follower Effect - Desktop only */}
       {isHovered && (
         <motion.div
-          className="absolute pointer-events-none z-10"
+          className="absolute pointer-events-none z-10 hidden lg:block"
           style={{
             left: mousePosition.x - 100,
             top: mousePosition.y - 100,
@@ -135,10 +137,10 @@ const CTASection = () => {
 
       {/* Section Header */}
       <div className="container mx-auto px-4 relative z-20">
-        <div className="flex items-center justify-end mb-8">
-          <h2 className="flex items-baseline gap-6 font-mono text-right">
-            <span className="text-5xl lg:text-7xl font-bold tracking-wider">CONTACT*</span>
-            <span className="text-6xl lg:text-8xl font-bold text-[#AD6331]">04</span>
+        <div className="flex items-center justify-between md:justify-end mb-8">
+          <h2 className="flex items-baseline gap-3 md:gap-6 font-mono text-left md:text-right">
+            <span className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold tracking-wider">CONTACT*</span>
+            <span className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-[#AD6331]">04</span>
           </h2>
           <div className="text-[#AD6331] border border-[#AD6331] p-2 hidden md:block ml-6">
             <Square size={32} strokeWidth={1} />
@@ -146,10 +148,10 @@ const CTASection = () => {
         </div>
 
         {/* Dotted Separator */}
-        <div className="w-full border-b border-dashed border-neutral-600 mb-12"></div>
+        <div className="w-full border-b border-dashed border-neutral-600 mb-8 md:mb-12"></div>
       </div>
 
-      <div className="container mx-auto px-6 relative z-20">
+      <div className="container mx-auto px-4 md:px-6 relative z-20">
         <motion.div
           className="max-w-6xl mx-auto text-center"
           style={{ x: springX, y: springY }}
@@ -159,9 +161,9 @@ const CTASection = () => {
             initial={{ opacity: 0, y: 50 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="mb-8"
+            className="mb-6 md:mb-8"
           >
-            <h3 className="text-6xl md:text-8xl lg:text-9xl font-black leading-tight mb-4">
+            <h3 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl font-black leading-tight mb-4">
               <span className="block">Ready to</span>
               <span className="block bg-gradient-to-r from-[#AD6331] via-white to-purple-400 bg-clip-text text-transparent">
                 Build Something
@@ -175,9 +177,9 @@ const CTASection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="max-w-4xl mx-auto mb-16"
+            className="max-w-4xl mx-auto mb-12 md:mb-16 px-4"
           >
-            <p className="text-xl md:text-2xl lg:text-3xl text-neutral-300 leading-relaxed">
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-neutral-300 leading-relaxed">
               Stop wasting time with agencies that talk big but deliver small. 
               <span className="text-white font-semibold"> Let&apos;s build your vision together.</span>
             </p>
@@ -188,7 +190,7 @@ const CTASection = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="relative"
+            className="relative px-4"
           >
             <a 
               href="https://cal.com/christian-fztuyy/30min?overlayCalendar=true&date=2025-07-11"
@@ -196,7 +198,7 @@ const CTASection = () => {
               rel="noopener noreferrer"
             >
               <InteractiveHoverButton 
-                className="bg-white/10 backdrop-blur-xl border border-white/20 text-white font-semibold h-16 px-10 text-lg shadow-lg shadow-white/10 hover:bg-white/20 hover:border-white/30 transition-all duration-300"
+                className="bg-white/10 backdrop-blur-xl border border-white/20 text-white font-semibold h-14 md:h-16 px-8 md:px-10 text-base md:text-lg shadow-lg shadow-white/10 hover:bg-white/20 hover:border-white/30 transition-all duration-300 w-full sm:w-auto"
               >
                 Schedule a Call →
               </InteractiveHoverButton>
@@ -207,15 +209,15 @@ const CTASection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 1.2 }}
-              className="mt-12 flex flex-col sm:flex-row gap-6 justify-center items-center"
+              className="mt-8 md:mt-12 flex flex-col gap-4 md:gap-6 justify-center items-center"
             >
               <div className="flex items-center gap-2 text-neutral-400">
-                <Sparkles className="w-5 h-5" />
-                <span className="text-lg">Free 30-minute consultation</span>
+                <Sparkles className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+                <span className="text-sm md:text-lg">Free 30-minute consultation</span>
               </div>
               <div className="flex items-center gap-2 text-neutral-400">
-                <Zap className="w-5 h-5" />
-                <span className="text-lg">Same-day response guaranteed</span>
+                <Zap className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+                <span className="text-sm md:text-lg">Same-day response guaranteed</span>
               </div>
             </motion.div>
           </motion.div>
@@ -225,7 +227,7 @@ const CTASection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 1.4 }}
-            className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
+            className="mt-16 md:mt-24 grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto px-4"
           >
             {[
               { stat: "24hrs", label: "Average Response Time" },
@@ -238,8 +240,8 @@ const CTASection = () => {
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
               >
-                <div className="text-4xl font-bold text-[#AD6331] mb-2">{item.stat}</div>
-                <div className="text-neutral-400">{item.label}</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#AD6331] mb-2">{item.stat}</div>
+                <div className="text-sm sm:text-base text-neutral-400">{item.label}</div>
               </motion.div>
             ))}
           </motion.div>
